@@ -1,6 +1,6 @@
 
 
-import 'package:paywall/models/payment/payment_start_request.dart';
+import 'package:paywall/models/payment/start/payment_start_request.dart';
 
 /// Request model for starting a 3D Secure payment.
 class PaymentStart3DRequest {

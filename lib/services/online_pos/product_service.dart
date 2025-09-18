@@ -1,14 +1,14 @@
-import 'package:paywall/models/product/product_cargo_cost_define_request.dart';
-import 'package:paywall/models/product/product_cargo_cost_request.dart';
-import 'package:paywall/models/product/product_cargo_cost_response.dart';
-import 'package:paywall/models/product/product_discount_request.dart';
-import 'package:paywall/models/product/product_discount_response.dart';
-import 'package:paywall/models/product/product_member_earning_increase_request.dart';
-import 'package:paywall/models/product/product_member_earning_increase_response.dart';
+import 'package:paywall/models/product/cargo/product_cargo_cost_define_request.dart';
+import 'package:paywall/models/product/cargo/product_cargo_cost_request.dart';
+import 'package:paywall/models/product/cargo/product_cargo_cost_response.dart';
+import 'package:paywall/models/product/discount/product_discount_request.dart';
+import 'package:paywall/models/product/discount/product_discount_response.dart';
+import 'package:paywall/models/product/member/product_member_earning_increase_request.dart';
+import 'package:paywall/models/product/member/product_member_earning_increase_response.dart';
 
 import '../../models/base_response.dart';
-import '../../models/product/product_list_request.dart';
-import '../../models/product/product_list_response.dart';
+import '../../models/product/list/product_list_request.dart';
+import '../../models/product/list/product_list_response.dart';
 import '../../utils/api_constants.dart';
 import '../base_service.dart';
 

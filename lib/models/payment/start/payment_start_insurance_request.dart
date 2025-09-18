@@ -1,4 +1,4 @@
-import 'package:paywall/models/payment/payment_start_request.dart';
+import 'package:paywall/models/payment/start/payment_start_request.dart';
 
 /// Request model for starting a direct (non-secure) insurance payment.
 /// This method uses the first 8 and last 4 digits of the card number.
