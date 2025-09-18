@@ -1,5 +1,14 @@
 import 'package:paywall/models/base_response.dart';
+import 'package:paywall/models/models/payment/cancel_request.dart';
+import 'package:paywall/models/payment/cancel_response.dart';
 import 'package:paywall/models/payment/installment_response.dart';
+import 'package:paywall/models/payment/partial_refund_request.dart';
+import 'package:paywall/models/payment/payment_query_by_payment_id_request.dart';
+import 'package:paywall/models/payment/payment_query_by_product_id_request.dart';
+import 'package:paywall/models/payment/payment_query_by_tracking_code_request.dart';
+import 'package:paywall/models/payment/payment_query_by_unique_code_request.dart';
+import 'package:paywall/models/payment/payment_query_request.dart';
+import 'package:paywall/models/payment/payment_query_response.dart';
 import 'package:paywall/models/payment/payment_start3d_request.dart';
 import 'package:paywall/models/payment/payment_start3d_response.dart';
 import 'package:paywall/models/payment/payment_start_insurance_request.dart';
@@ -11,6 +20,8 @@ import 'package:paywall/models/payment/provision_cancel_response.dart';
 import 'package:paywall/models/payment/provision_request.dart';
 import 'package:paywall/models/payment/provision_response.dart';
 import 'package:paywall/models/payment/refund_request.dart';
+import 'package:paywall/models/payment/revert_request.dart';
+import 'package:paywall/models/payment/revert_response.dart';
 import 'package:paywall/services/base_service.dart';
 
 import '../models/payment/bin_inquiry_response.dart';
@@ -122,6 +133,123 @@ class PaymentService extends BaseService {
       data: request.toJson(),
       fromJsonT: (json) => json, // Body null dönebileceği için generic json
       headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+    );
+
+    return response;
+  }
+  /// Sends a partial refund request for a payment.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<dynamic>> partialRefundPayment({required PartialRefundRequest request, required String apiKeyPrivate,
+    required String apiClientPrivate,
+  }) async {
+    final response = await post(
+      "${ApiConstants.baseUrl}/paywall/private/refund/partial",
+      data: request.toJson(),
+      fromJsonT: (json) => json, // Body çoğunlukla null
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+    );
+
+    return response;
+  }
+  /// Sends a cancel request for a payment.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<CancelResponse>> cancelPayment({required CancelRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+    final response = await post(
+      "${ApiConstants.baseUrl}/paywall/private/cancel",
+      data: request.toJson(),
+      fromJsonT: (json) => CancelResponse.fromJson(json),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+    );
+
+    return response;
+  }
+
+  /// Sends a revert request (cancel/refund/partial refund) for a payment.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<RevertResponse>> revertPayment({required RevertRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+    final response = await post(
+      "${ApiConstants.baseUrl}/paywall/private/revert",
+      data: request.toJson(),
+      fromJsonT: (json) => RevertResponse.fromJson(json),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+    );
+
+    return response;
+  }
+
+  /// Retrieves payment details by MerchantUniqueCode.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<PaymentQueryResponse>> getPaymentByMerchantUniqueCode({
+    required PaymentQueryRequest request,
+    required String apiKeyPrivate,
+    required String apiClientPrivate,
+  }) async {
+    final response = await get(
+      "${ApiConstants.baseUrl}/paywall/private/query",
+      fromJsonT: (json) => PaymentQueryResponse.fromJson(json),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+    );
+
+    return response;
+  }
+  /// Retrieves payment details by UniqueCode.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<PaymentQueryResponse>> getPaymentByUniqueCode({
+    required PaymentQueryByUniqueCodeRequest request,
+    required String apiKeyPrivate,
+    required String apiClientPrivate,
+  }) async {
+    final response = await get(
+      "${ApiConstants.baseUrl}/paywall/private/query/by/uniquecode",
+      fromJsonT: (json) => PaymentQueryResponse.fromJson(json),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+    );
+
+    return response;
+  }
+
+    /// Retrieves payment details by PaymentId.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<PaymentQueryResponse>> getPaymentByPaymentId({
+    required PaymentQueryByPaymentIdRequest request,
+    required String apiKeyPrivate,
+    required String apiClientPrivate,
+  }) async {
+    final response = await get(
+      "${ApiConstants.baseUrl}/paywall/private/query/by/paymentid",
+      fromJsonT: (json) => PaymentQueryResponse.fromJson(json),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+    );
+
+    return response;
+  }
+
+    /// Retrieves a list of payments associated with the given ProductId.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<List<PaymentQueryResponse>>> getPaymentsByProductId({
+    required PaymentQueryByProductIdRequest request,
+    required String apiKeyPrivate,
+    required String apiClientPrivate,
+  }) async {
+    final response = await get(
+      "${ApiConstants.baseUrl}/paywall/private/query/by/productid",
+      fromJsonT: (json) => (json as List).map((e) => PaymentQueryResponse.fromJson(e)).toList(),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+    );
+
+    return response;
+  }
+  /// Retrieves a list of payments associated with the given TrackingCode.
+  /// Requires private API authentication headers.
+  Future<BaseResponse<List<PaymentQueryResponse>>> getPaymentsByTrackingCode({
+    required PaymentQueryByTrackingCodeRequest request,
+    required String apiKeyPrivate,
+    required String apiClientPrivate,
+  }) async {
+    final response = await get(
+      "${ApiConstants.baseUrl}/paywall/private/query/by/trackingcode",
+      fromJsonT: (json) => (json as List).map((e) => PaymentQueryResponse.fromJson(e)).toList(),
+      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
     );
 
     return response;
