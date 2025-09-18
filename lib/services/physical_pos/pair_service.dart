@@ -1,3 +1,15 @@
+import 'package:paywall/client/api_client.dart';
+import 'package:paywall/models/physical_pos/pair/async/pair_async_confirm_response.dart';
+import 'package:paywall/models/physical_pos/pair/async/pair_async_request_cancel_response.dart';
+import 'package:paywall/models/physical_pos/pair/async/pair_async_request_response.dart';
+import 'package:paywall/models/physical_pos/pair/async/pair_async_unpair_response.dart';
+import 'package:paywall/models/physical_pos/pair/sync/pair_sync_request.dart';
+import 'package:paywall/models/physical_pos/pair/sync/pair_sync_request_cancel_request.dart';
+import 'package:paywall/models/physical_pos/pair/sync/pair_sync_request_cancel_response.dart';
+import 'package:paywall/models/physical_pos/pair/sync/pair_sync_response.dart';
+import 'package:paywall/models/physical_pos/pair/sync/pair_sync_unpair_request.dart';
+import 'package:paywall/models/physical_pos/pair/sync/pair_sync_unpair_response.dart';
+
 /// Service for managing async pair requests for terminals.
 class PairService {
   final ApiClient _apiClient = ApiClient();

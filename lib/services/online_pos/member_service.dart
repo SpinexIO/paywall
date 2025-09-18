@@ -1,25 +1,25 @@
 import 'package:paywall/models/base_response.dart';
-import 'package:paywall/models/marketplace/bank_account_add_request.dart';
-import 'package:paywall/models/marketplace/bank_account_add_response.dart';
-import 'package:paywall/models/marketplace/bank_account_delete_request.dart';
-import 'package:paywall/models/marketplace/bank_account_delete_response.dart';
-import 'package:paywall/models/marketplace/bank_account_list_response.dart';
-import 'package:paywall/models/marketplace/bank_account_update_request.dart';
-import 'package:paywall/models/marketplace/bank_account_update_response.dart';
-import 'package:paywall/models/marketplace/member_create_request.dart';
-import 'package:paywall/models/marketplace/member_create_response.dart';
-import 'package:paywall/models/marketplace/member_delete_request.dart';
-import 'package:paywall/models/marketplace/member_delete_response.dart';
-import 'package:paywall/models/marketplace/member_list_response.dart';
-import 'package:paywall/models/marketplace/member_search_response.dart';
-import 'package:paywall/models/marketplace/member_update_request.dart';
-import 'package:paywall/models/marketplace/member_update_response.dart';
-import 'package:paywall/models/marketplace/value_date_add_request.dart';
-import 'package:paywall/models/marketplace/value_date_add_response.dart';
-import 'package:paywall/models/marketplace/value_date_get_response.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_add_request.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_add_response.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_delete_request.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_delete_response.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_list_response.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_update_request.dart';
+import 'package:paywall/models/marketplace/bank_account/bank_account_update_response.dart';
+import 'package:paywall/models/marketplace/member/member_create_request.dart';
+import 'package:paywall/models/marketplace/member/member_create_response.dart';
+import 'package:paywall/models/marketplace/member/member_delete_request.dart';
+import 'package:paywall/models/marketplace/member/member_delete_response.dart';
+import 'package:paywall/models/marketplace/member/member_list_response.dart';
+import 'package:paywall/models/marketplace/member/member_search_response.dart';
+import 'package:paywall/models/marketplace/member/member_update_request.dart';
+import 'package:paywall/models/marketplace/member/member_update_response.dart';
+import 'package:paywall/models/marketplace/value_date/value_date_add_request.dart';
+import 'package:paywall/models/marketplace/value_date/value_date_add_response.dart';
+import 'package:paywall/models/marketplace/value_date/value_date_get_response.dart';
 import 'package:paywall/services/base_service.dart';
 
-import '../utils/api_constants.dart';
+import '../../utils/api_constants.dart';
 
 /// Service for handling Member related API operations.
 class MemberService extends BaseService {
