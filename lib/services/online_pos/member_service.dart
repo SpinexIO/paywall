@@ -27,23 +27,16 @@ class MemberService extends BaseService {
   /// Sends a POST request to the Member API with required headers and request body.
   Future<BaseResponse<MemberCreateResponse>> createMember({
     required MemberCreateRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
-    final response = await post(
-      "${ApiConstants.baseUrl}/paywall/member",
-      data: request.toJson(),
-      fromJsonT: (json) => MemberCreateResponse.fromJson(json),
-    );
+    final response = await post("${ApiConstants.baseUrl}/paywall/member", data: request.toJson(), requiresAuth: true,fromJsonT: (json) => MemberCreateResponse.fromJson(json),);
 
     return response;
   }
 
-
   /// Updates an existing member.
   /// Sends a PUT request to the Member API with the given request body.
   Future<BaseResponse<MemberUpdateResponse>> updateMember({required MemberUpdateRequest request}) async {
-    final response = await put("${ApiConstants.baseUrl}/paywall/member", data: request.toJson(), fromJsonT: (json) => MemberUpdateResponse.fromJson(json));
+    final response = await put("${ApiConstants.baseUrl}/paywall/member", data: request.toJson(), requiresAuth: true,fromJsonT: (json) => MemberUpdateResponse.fromJson(json));
 
     return response;
   }
@@ -51,7 +44,7 @@ class MemberService extends BaseService {
   /// Deletes an existing member.
   /// Sends a DELETE request to the Member API with the given request body.
   Future<BaseResponse<MemberDeleteResponse>> deleteMember({required MemberDeleteRequest request}) async {
-    final response = await delete("${ApiConstants.baseUrl}/paywall/member", data: request.toJson(), fromJsonT: (json) => MemberDeleteResponse.fromJson(json));
+    final response = await delete("${ApiConstants.baseUrl}/paywall/member", data: request.toJson(), requiresAuth: true,fromJsonT: (json) => MemberDeleteResponse.fromJson(json));
 
     return response;
   }
@@ -59,7 +52,7 @@ class MemberService extends BaseService {
   /// Retrieves list of members with pagination.
   /// Sends a GET request to the Member API.
   Future<BaseResponse<MemberListResponse>> getMembers({required int start, required int length}) async {
-    final response = await get("${ApiConstants.baseUrl}/paywall/member?start=$start&length=$length", fromJsonT: (json) => MemberListResponse.fromJson(json));
+    final response = await get("${ApiConstants.baseUrl}/paywall/member?start=$start&length=$length", requiresAuth: true,fromJsonT: (json) => MemberListResponse.fromJson(json));
 
     return response;
   }
@@ -75,28 +68,30 @@ class MemberService extends BaseService {
 
     final queryString = queryParams.entries.map((e) => "${e.key}=${Uri.encodeComponent(e.value)}").join("&");
 
-    final response = await get("${ApiConstants.baseUrl}/paywall/member/search?$queryString", fromJsonT: (json) => MemberSearchResponse.fromJson(json));
+    final response = await get("${ApiConstants.baseUrl}/paywall/member/search?$queryString", requiresAuth: true,fromJsonT: (json) => MemberSearchResponse.fromJson(json));
 
     return response;
   }
+
   /// Adds a new bank account method to a member.
   /// Sends a POST request to the Bank Account API with the given request body.
   Future<BaseResponse<BankAccountAddResponse>> addBankAccount({required BankAccountAddRequest request}) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/member/bankaccount",
       data: request.toJson(),
-      fromJsonT: (json) => BankAccountAddResponse.fromJson(json),
+      requiresAuth: true,fromJsonT: (json) => BankAccountAddResponse.fromJson(json),
     );
 
     return response;
   }
+
   /// Updates an existing bank account method.
   /// Sends a PUT request to the Bank Account API with the given request body.
   Future<BaseResponse<BankAccountUpdateResponse>> updateBankAccount({required BankAccountUpdateRequest request}) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/member/bankaccount",
       data: request.toJson(),
-      fromJsonT: (json) => BankAccountUpdateResponse.fromJson(json),
+      requiresAuth: true,fromJsonT: (json) => BankAccountUpdateResponse.fromJson(json),
     );
 
     return response;
@@ -108,25 +103,27 @@ class MemberService extends BaseService {
     final response = await delete(
       "${ApiConstants.baseUrl}/paywall/member/bankaccount",
       data: request.toJson(),
-      fromJsonT: (json) => BankAccountDeleteResponse.fromJson(json),
+      requiresAuth: true,fromJsonT: (json) => BankAccountDeleteResponse.fromJson(json),
     );
 
     return response;
   }
+
   /// Retrieves the list of bank accounts for a given member.
   /// Sends a GET request to the Bank Account API.
   Future<BaseResponse<BankAccountListResponse>> getBankAccounts({required int memberId}) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/member/bankaccount?memberid=$memberId",
-      fromJsonT: (json) => BankAccountListResponse.fromJson(json),
+      requiresAuth: true,fromJsonT: (json) => BankAccountListResponse.fromJson(json),
     );
 
     return response;
   }
+
   /// Retrieves the value date and commission settings of a member.
   /// Sends a GET request to the ValueDate API.
   Future<BaseResponse<ValueDateGetResponse>> getValueDate({required int memberId}) async {
-    final response = await get("${ApiConstants.baseUrl}/paywall/member/valuedate?memberid=$memberId", fromJsonT: (json) => ValueDateGetResponse.fromJson(json));
+    final response = await get("${ApiConstants.baseUrl}/paywall/member/valuedate?memberid=$memberId", requiresAuth: true,fromJsonT: (json) => ValueDateGetResponse.fromJson(json));
 
     return response;
   }
@@ -137,10 +134,9 @@ class MemberService extends BaseService {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/member/valuedate",
       data: request.toJson(),
-      fromJsonT: (json) => ValueDateAddResponse.fromJson(json),
+      requiresAuth: true,fromJsonT: (json) => ValueDateAddResponse.fromJson(json),
     );
 
     return response;
   }
-
 }

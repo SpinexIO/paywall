@@ -9,8 +9,8 @@ class ProviderService {
   /// Fetches the full list of providers, brands, and regions.
   ///
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<ProviderResponse> getProviders({required String apiKeyPrivate, required String apiClientPrivate}) async {
-    final response = await _apiClient.get("/api/provider/list", headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate});
+  Future<ProviderResponse> getProviders() async {
+    final response = await _apiClient.get("/api/provider/list", requiresAuth: true);
 
     return ProviderResponse.fromJson(response.data as Map<String, dynamic>);
   }
@@ -19,8 +19,8 @@ class ProviderService {
   ///
   /// [regionId] - The region identifier.
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<ProviderResponse> getProvidersByRegion({required int regionId, required String apiKeyPrivate, required String apiClientPrivate}) async {
-    final response = await _apiClient.get("/api/provider/$regionId/list", headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate});
+  Future<ProviderResponse> getProvidersByRegion({required int regionId}) async {
+    final response = await _apiClient.get("/api/provider/$regionId/list", requiresAuth: true);
 
     return ProviderResponse.fromJson(response.data as Map<String, dynamic>);
   }

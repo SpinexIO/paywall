@@ -9,11 +9,11 @@ class TerminalService {
   /// Fetches a paginated list of terminals across all connections.
   ///
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<TerminalResponse> getTerminals({required TerminalRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<TerminalResponse> getTerminals({required TerminalRequest request}) async {
     final response = await _apiClient.post(
       "/api/terminal/list",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return TerminalResponse.fromJson(response.data as Map<String, dynamic>);
@@ -26,13 +26,11 @@ class TerminalService {
   Future<TerminalResponse> getTerminalsByConnection({
     required String connectionId,
     required TerminalRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/terminal/$connectionId/list",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return TerminalResponse.fromJson(response.data as Map<String, dynamic>);
@@ -42,11 +40,11 @@ class TerminalService {
   ///
   /// [connectionId] - The ID of the connection whose terminals you want to sync.
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<bool> syncTerminals({required String connectionId, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<bool> syncTerminals({required String connectionId}) async {
     final response = await _apiClient.post(
       "/api/terminal/sync",
       data: {"ConnectionId": connectionId},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final Map<String, dynamic> json = response.data as Map<String, dynamic>;
@@ -62,13 +60,11 @@ class TerminalService {
   Future<bool> checkTerminalConnectivity({
     required String terminalId,
     String terminalTagCode = "",
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/terminal/connectivity/check",
       data: {"TerminalId": terminalId, "TerminalTagCode": terminalTagCode},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final Map<String, dynamic> json = response.data as Map<String, dynamic>;
@@ -87,13 +83,11 @@ class TerminalService {
     required String terminalId,
     int pageIndex = 0,
     int pageSize = 10,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/terminal/tag/list",
       data: {"pageIndex": pageIndex, "pageSize": pageSize, "terminalId": terminalId},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return response.data as Map<String, dynamic>;
@@ -108,13 +102,11 @@ class TerminalService {
     required String terminalId,
     required String name,
     required String code,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/terminal/tag",
       data: {"TerminalId": terminalId, "Name": name, "Code": code},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final Map<String, dynamic> json = response.data as Map<String, dynamic>;
@@ -135,13 +127,11 @@ class TerminalService {
     required String name,
     required String code,
     required bool isActive,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.put(
       "/api/terminal/tag",
       data: {"TerminalTagId": terminalTagId, "Name": name, "Code": code, "IsActive": isActive},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final Map<String, dynamic> json = response.data as Map<String, dynamic>;
@@ -154,11 +144,11 @@ class TerminalService {
   ///
   /// [terminalTagId] - The GUID of the terminal tag to be deleted.
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<bool> deleteTerminalTag({required String terminalTagId, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<bool> deleteTerminalTag({required String terminalTagId}) async {
     final response = await _apiClient.delete(
       "/api/terminal/tag",
       data: {"TerminalTagId": terminalTagId},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final Map<String, dynamic> json = response.data as Map<String, dynamic>;

@@ -19,8 +19,8 @@ abstract class BaseService {
   /// [fromJsonT] - function to parse the `data` field into type `T`.
   Future<BaseResponse<T>> get<T>(
     String path, 
-    {Map<String, dynamic>? queryParameters, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers}) async {
-    final Response response = await apiClient.get(path, queryParameters: queryParameters, headers: headers);
+    {Map<String, dynamic>? queryParameters, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers, bool requiresAuth = false }) async {
+    final Response response = await apiClient.get(path, queryParameters: queryParameters, headers: headers, requiresAuth: requiresAuth);
     return BaseResponse<T>.fromJson(response.data as Map<String, dynamic>, fromJsonT);
   }
 
@@ -29,23 +29,29 @@ abstract class BaseService {
   /// [path] - API endpoint.
   /// [data] - request body.
   /// [fromJsonT] - function to parse the `data` field into type `T`.
-  Future<BaseResponse<T>> post<T>(String path, {dynamic data, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers}) async {
-    final Response response = await apiClient.post(path, data: data, headers: headers);
+  Future<BaseResponse<T>> post<T>(String path, {dynamic data, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers,
+    bool requiresAuth = false,
+  }) async {
+    final Response response = await apiClient.post(path, data: data, headers: headers, requiresAuth: requiresAuth);
 
     return BaseResponse<T>.fromJson(response.data as Map<String, dynamic>, fromJsonT);
   }
 
   /// Executes a PUT request and parses the response into [BaseResponse].
-  Future<BaseResponse<T>> put<T>(String path, {dynamic data, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers}) async {
-    final Response response = await apiClient.put(path, data: data, headers: headers);
+  Future<BaseResponse<T>> put<T>(String path, {dynamic data, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers,
+    bool requiresAuth = false,
+  }) async {
+    final Response response = await apiClient.put(path, data: data, headers: headers, requiresAuth: requiresAuth);
 
     return BaseResponse<T>.fromJson(response.data as Map<String, dynamic>, fromJsonT);
   }
 
   /// Executes a DELETE request and parses the response into [BaseResponse].
-  Future<BaseResponse<T>> delete<T>(String path, {dynamic data, required T Function(Map<String, dynamic>) fromJsonT, Map<String, dynamic>? headers}) async {
-    final Response response = await apiClient.delete(path, data: data, headers: headers);
+  Future<BaseResponse<T>> delete<T>(String path, {dynamic data,  T Function(Map<String, dynamic>)? fromJsonT, Map<String, dynamic>? headers,
+    bool requiresAuth = false,
+  }) async {
+    final Response response = await apiClient.delete(path, data: data, headers: headers, requiresAuth: requiresAuth);
 
-    return BaseResponse<T>.fromJson(response.data as Map<String, dynamic>, fromJsonT);
+    return BaseResponse<T>.fromJson(response.data as Map<String, dynamic>, fromJsonT ?? (json) => json as T);
   }
 }

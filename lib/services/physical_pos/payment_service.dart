@@ -26,14 +26,12 @@ class PaymentService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PaymentAsyncSaleResponse> createAsyncSale({
     required PaymentAsyncSaleRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     
     final response = await _apiClient.post(
       "/api/payment/async/sale",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final result = (response.data as Map<String, dynamic>)['Result'] as Map<String, dynamic>;
@@ -48,16 +46,11 @@ class PaymentService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PaymentAsyncCancelResponse> cancelAsyncPayment({
     required PaymentAsyncCancelRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/payment/async/cancel",
       data: request.toJson(),
-      headers: {
-        'apikeyprivate': apiKeyPrivate,
-        'apiclientprivate': apiClientPrivate,
-      },
+      requiresAuth: true
     );
 
     final result =
@@ -72,16 +65,11 @@ class PaymentService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PaymentSyncSaleResponse> saleSyncPayment({
     required PaymentSyncSaleRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/payment/sync/sale",
       data: request.toJson(),
-      headers: {
-        'apikeyprivate': apiKeyPrivate,
-        'apiclientprivate': apiClientPrivate,
-      },
+      requiresAuth: true
     );
 
     final result =
@@ -100,16 +88,11 @@ class PaymentService {
 /// - The rollback is only possible if the terminal has **not yet received** the sale request.
 Future<PaymentSyncSaleRollbackResponse> rollbackSyncSale({
   required PaymentSyncSaleRollbackRequest request,
-  required String apiKeyPrivate,
-  required String apiClientPrivate,
 }) async {
   final response = await _apiClient.post(
     "/api/payment/sync/sale/rollback",
     data: request.toJson(),
-    headers: {
-      'apikeyprivate': apiKeyPrivate,
-      'apiclientprivate': apiClientPrivate,
-    },
+    requiresAuth: true,
   );
 
   return PaymentSyncSaleRollbackResponse.fromJson(
@@ -125,16 +108,11 @@ Future<PaymentSyncSaleRollbackResponse> rollbackSyncSale({
 ///   to trigger push notification instead.
 Future<PaymentSyncCancelResponse> cancelSyncPayment({
   required PaymentSyncCancelRequest request,
-  required String apiKeyPrivate,
-  required String apiClientPrivate,
 }) async {
   final response = await _apiClient.post(
     "/api/payment/sync/cancel",
     data: request.toJson(),
-    headers: {
-      'apikeyprivate': apiKeyPrivate,
-      'apiclientprivate': apiClientPrivate,
-    },
+    requiresAuth: true,
   );
 
   return PaymentSyncCancelResponse.fromJson(
@@ -149,16 +127,11 @@ Future<PaymentSyncCancelResponse> cancelSyncPayment({
 /// - Requires `apikeyprivate` and `apiclientprivate` headers.
 Future<PaymentSyncCancelRollbackResponse> rollbackSyncCancel({
   required PaymentSyncCancelRollbackRequest request,
-  required String apiKeyPrivate,
-  required String apiClientPrivate,
 }) async {
   final response = await _apiClient.post(
     "/api/payment/sync/cancel/rollback",
     data: request.toJson(),
-    headers: {
-      'apikeyprivate': apiKeyPrivate,
-      'apiclientprivate': apiClientPrivate,
-    },
+    requiresAuth: true,
   );
 
   return PaymentSyncCancelRollbackResponse.fromJson(
@@ -171,16 +144,11 @@ Future<PaymentSyncCancelRollbackResponse> rollbackSyncCancel({
 /// Requires `apikeyprivate` and `apiclientprivate` headers.
 Future<PaymentListResponse> getPayments({
   required PaymentListRequest request,
-  required String apiKeyPrivate,
-  required String apiClientPrivate,
 }) async {
   final response = await _apiClient.post(
     "/api/payment/list",
     data: request.toJson(),
-    headers: {
-      'apikeyprivate': apiKeyPrivate,
-      'apiclientprivate': apiClientPrivate,
-    },
+    requiresAuth: true,
   );
 
   return PaymentListResponse.fromJson(response.data);
@@ -192,16 +160,11 @@ Future<PaymentListResponse> getPayments({
 /// Requires `apikeyprivate` and `apiclientprivate` headers.
 Future<PaymentActivitiesResponse> getPaymentActivities({
   required PaymentActivitiesRequest request,
-  required String apiKeyPrivate,
-  required String apiClientPrivate,
 }) async {
   final response = await _apiClient.post(
     "/api/payment/activities",
     data: request.toJson(),
-    headers: {
-      'apikeyprivate': apiKeyPrivate,
-      'apiclientprivate': apiClientPrivate,
-    },
+    requiresAuth: true,
   );
 
   return PaymentActivitiesResponse.fromJson(response.data);
@@ -213,24 +176,19 @@ Future<PaymentActivitiesResponse> getPaymentActivities({
 /// Requires `apikeyprivate` and `apiclientprivate` headers.
 Future<PaymentProductsResponse> getPaymentProducts({
   required PaymentProductsRequest request,
-  required String apiKeyPrivate,
-  required String apiClientPrivate,
 }) async {
   final response = await _apiClient.post(
     "/api/payment/products",
     data: request.toJson(),
-    headers: {
-      'apikeyprivate': apiKeyPrivate,
-      'apiclientprivate': apiClientPrivate,
-    },
+    requiresAuth: true,
   );
 
   return PaymentProductsResponse.fromJson(response.data);
 }
-Future<PaymentInquiryResponse> getPaymentInquiry({required String paymentRequestId, required String apiKeyPrivate, required String apiClientPrivate}) async {
+Future<PaymentInquiryResponse> getPaymentInquiry({required String paymentRequestId}) async {
     final response = await _apiClient.get(
       "/api/payment/inquiry/$paymentRequestId",
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return PaymentInquiryResponse.fromJson(response.data);

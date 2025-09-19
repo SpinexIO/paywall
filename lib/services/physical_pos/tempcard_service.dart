@@ -11,7 +11,7 @@ class TempCardService {
   ///
   /// Requires a valid authorization token set in [ApiClient].
   Future<TempCardResponse> createTempCard(TempCardRequest request) async {
-    final response = await _apiClient.post("/api/paywall/tempcard", data: request.toJson());
+    final response = await _apiClient.post("/api/paywall/tempcard", data: request.toJson(), requiresAuth: true);
 
     return TempCardResponse.fromJson(response.data as Map<String, dynamic>);
   }

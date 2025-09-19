@@ -23,8 +23,6 @@ class PairService {
   Future<PairAsyncRequestResponse> requestAsyncPair({
     String? terminalId,
     String? terminalTagCode,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final body = <String, dynamic>{};
 
@@ -37,7 +35,7 @@ class PairService {
     final response = await _apiClient.post(
       "/api/pair/async/request",
       data: body,
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final result = (response.data as Map<String, dynamic>)['Result'] as Map<String, dynamic>;
@@ -50,13 +48,11 @@ class PairService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PairAsyncConfirmResponse> confirmAsyncPair({
     required String pairAsyncRequestId,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.put(
       "/api/pair/async/confirm",
       data: {'PairAsyncRequestId': pairAsyncRequestId},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final result = (response.data as Map<String, dynamic>)['Result'] as Map<String, dynamic>;
@@ -68,11 +64,11 @@ class PairService {
   ///
   /// Returns the [TerminalPairId] of the unpaired terminal.
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<PairAsyncUnpairResponse> unpairAsync({required String terminalTagCode, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<PairAsyncUnpairResponse> unpairAsync({required String terminalTagCode}) async {
     final response = await _apiClient.delete(
       "/api/pair/async/unpair",
       data: {'TerminalTagCode': terminalTagCode},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final result = (response.data as Map<String, dynamic>)['Result'] as Map<String, dynamic>;
@@ -86,13 +82,11 @@ class PairService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PairAsyncRequestCancelResponse> cancelAsyncPairRequest({
     required String pairAsyncRequestId,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.delete(
       "/api/pair/async/request/delete",
       data: {'PairAsyncRequestId': pairAsyncRequestId},
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     final result = (response.data as Map<String, dynamic>)['Result'] as Map<String, dynamic>;
@@ -108,16 +102,11 @@ class PairService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PairSyncResponse> requestSyncPair({
     required PairSyncRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/pair/sync/request",
       data: request.toJson(),
-      headers: {
-        'apikeyprivate': apiKeyPrivate,
-        'apiclientprivate': apiClientPrivate,
-      },
+      requiresAuth: true
     );
 
     final result =
@@ -132,16 +121,11 @@ class PairService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PairSyncUnpairResponse> unpairSync({
     required PairSyncUnpairRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.delete(
       "/api/pair/sync/unpair",
       data: request.toJson(),
-      headers: {
-        'apikeyprivate': apiKeyPrivate,
-        'apiclientprivate': apiClientPrivate,
-      },
+      requiresAuth: true
     );
 
     final result =
@@ -157,16 +141,11 @@ class PairService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<PairSyncRequestCancelResponse> cancelSyncPairRequest({
     required PairSyncRequestCancelRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.delete(
       "/api/pair/sync/request/delete",
       data: request.toJson(),
-      headers: {
-        'apikeyprivate': apiKeyPrivate,
-        'apiclientprivate': apiClientPrivate,
-      },
+      requiresAuth: true
     );
 
     final result =

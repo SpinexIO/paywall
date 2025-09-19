@@ -154,38 +154,36 @@ class PaymentService extends BaseService {
   }
   /// Sends a refund request for a payment.
   /// Requires private API authentication headers.
-  Future<BaseResponse<dynamic>> refundPayment({required RefundRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<BaseResponse<dynamic>> refundPayment({required RefundRequest request}) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/private/refund",
+      requiresAuth: true,
       data: request.toJson(),
       fromJsonT: (json) => json, // Body null dönebileceği için generic json
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
     );
 
     return response;
   }
   /// Sends a partial refund request for a payment.
   /// Requires private API authentication headers.
-  Future<BaseResponse<dynamic>> partialRefundPayment({required PartialRefundRequest request, required String apiKeyPrivate,
-    required String apiClientPrivate,
-  }) async {
+  Future<BaseResponse<dynamic>> partialRefundPayment({required PartialRefundRequest request}) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/private/refund/partial",
+      requiresAuth: true,
       data: request.toJson(),
       fromJsonT: (json) => json, // Body çoğunlukla null
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
     );
 
     return response;
   }
   /// Sends a cancel request for a payment.
   /// Requires private API authentication headers.
-  Future<BaseResponse<CancelResponse>> cancelPayment({required CancelRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<BaseResponse<CancelResponse>> cancelPayment({required CancelRequest request}) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/private/cancel",
+      requiresAuth: true,
       data: request.toJson(),
       fromJsonT: (json) => CancelResponse.fromJson(json),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
     );
 
     return response;
@@ -193,12 +191,12 @@ class PaymentService extends BaseService {
 
   /// Sends a revert request (cancel/refund/partial refund) for a payment.
   /// Requires private API authentication headers.
-  Future<BaseResponse<RevertResponse>> revertPayment({required RevertRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<BaseResponse<RevertResponse>> revertPayment({required RevertRequest request}) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/private/revert",
+      requiresAuth: true,
       data: request.toJson(),
       fromJsonT: (json) => RevertResponse.fromJson(json),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
     );
 
     return response;
@@ -208,13 +206,12 @@ class PaymentService extends BaseService {
   /// Requires private API authentication headers.
   Future<BaseResponse<PaymentQueryResponse>> getPaymentByMerchantUniqueCode({
     required PaymentQueryRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/private/query",
       fromJsonT: (json) => PaymentQueryResponse.fromJson(json),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+      requiresAuth: true,
+      headers: { ...request.toHeaders()},
     );
 
     return response;
@@ -223,13 +220,12 @@ class PaymentService extends BaseService {
   /// Requires private API authentication headers.
   Future<BaseResponse<PaymentQueryResponse>> getPaymentByUniqueCode({
     required PaymentQueryByUniqueCodeRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/private/query/by/uniquecode",
       fromJsonT: (json) => PaymentQueryResponse.fromJson(json),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+      requiresAuth: true,
+      headers: { ...request.toHeaders()},
     );
 
     return response;
@@ -239,13 +235,12 @@ class PaymentService extends BaseService {
   /// Requires private API authentication headers.
   Future<BaseResponse<PaymentQueryResponse>> getPaymentByPaymentId({
     required PaymentQueryByPaymentIdRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/private/query/by/paymentid",
       fromJsonT: (json) => PaymentQueryResponse.fromJson(json),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+      requiresAuth: true,
+      headers: { ...request.toHeaders()},
     );
 
     return response;
@@ -255,13 +250,12 @@ class PaymentService extends BaseService {
   /// Requires private API authentication headers.
   Future<BaseResponse<List<PaymentQueryResponse>>> getPaymentsByProductId({
     required PaymentQueryByProductIdRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/private/query/by/productid",
       fromJsonT: (json) => (json as List).map((e) => PaymentQueryResponse.fromJson(e)).toList(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+      requiresAuth: true,
+      headers: { ...request.toHeaders()},
     );
 
     return response;
@@ -270,13 +264,12 @@ class PaymentService extends BaseService {
   /// Requires private API authentication headers.
   Future<BaseResponse<List<PaymentQueryResponse>>> getPaymentsByTrackingCode({
     required PaymentQueryByTrackingCodeRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/private/query/by/trackingcode",
       fromJsonT: (json) => (json as List).map((e) => PaymentQueryResponse.fromJson(e)).toList(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate, ...request.toHeaders()},
+      requiresAuth: true,
+      headers: { ...request.toHeaders()},
     );
 
     return response;
@@ -285,14 +278,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<StormPaymentResponse>> startStormPayment({
     required StormPaymentRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/startdirect",
       data: request.toJson(),
       fromJsonT: (json) => StormPaymentResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -301,14 +291,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<TsunamiPaymentResponse>> startTsunamiPayment({
     required StormPaymentRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/big/startdirect",
       data: request.toJson(),
       fromJsonT: (json) => TsunamiPaymentResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
       // Burada dilersen Content-Encoding: gzip / br header’ı da ekleyebilirsin.
     );
 
@@ -328,8 +315,6 @@ class PaymentService extends BaseService {
     String? merchantUniqueCode,
     String? trackingCode,
     bool? callbackBodyCompression,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final formData = FormData.fromMap({
       'FileFormat': fileFormat,
@@ -349,7 +334,8 @@ class PaymentService extends BaseService {
       "${ApiConstants.baseUrl}/paywall/payment/bulk/file/startdirect",
       data: formData,
       fromJsonT: (json) => FilePaymentResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'Content-Type': 'multipart/form-data'},
+      requiresAuth: true,
+      headers: {'Content-Type': 'multipart/form-data'},
     );
 
     return response;
@@ -358,14 +344,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<BulkCancelResponse>> cancelBulkPayment({
     required BulkCancelRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/payment/cancel",
       data: request.toJson(),
       fromJsonT: (json) => BulkCancelResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -374,14 +357,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<BatchCancelResponse>> batchCancelPayments({
     required BatchCancelRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/batch/cancel",
       data: request.toJson(),
       fromJsonT: (json) => BatchCancelResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -391,14 +371,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<RefundBulkResponse>> refundBulkPayment({
     required RefundBulkRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/payment/refund",
       data: request.toJson(),
       fromJsonT: (json) => RefundBulkResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -407,14 +384,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<RefundBatchResponse>> refundBatchPayments({
     required RefundBatchRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/batch/refund",
       data: request.toJson(),
       fromJsonT: (json) => RefundBatchResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -425,14 +399,11 @@ class PaymentService extends BaseService {
     required String merchantUniqueCode,
     required int pageSize,
     required int pageNumber,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/payment/query",
       queryParameters: {'merchantuniquecode': merchantUniqueCode, 'pageSize': pageSize, 'pageNumber': pageNumber},
       fromJsonT: (json) => BulkPaymentQueryResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -440,14 +411,11 @@ class PaymentService extends BaseService {
   /// Queries bulk payment summary results by merchant unique code.
   Future<BaseResponse<BulkPaymentSummaryResponse>> queryBulkPaymentsSummary({
     required String merchantUniqueCode,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/payment/query/summary",
       queryParameters: {'merchantuniquecode': merchantUniqueCode},
       fromJsonT: (json) => BulkPaymentSummaryResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -456,14 +424,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<BulkPaymentRetryResponse>> retryBulkPayment({
     required BulkPaymentRetryRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/payment/retry",
       data: request.toJson(),
       fromJsonT: (json) => BulkPaymentRetryResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -472,14 +437,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<BulkPaymentCallbackResponse>> resendBulkPaymentCallback({
     required BulkPaymentCallbackRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/bulk/payment/send/callback",
       data: request.toJson(),
       fromJsonT: (json) => BulkPaymentCallbackResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -489,14 +451,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<SplitPaymentResponse>> startSplitPayment({
     required SplitPaymentRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/payment/start/split",
       data: request.toJson(),
       fromJsonT: (json) => SplitPaymentResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;
@@ -505,14 +464,11 @@ class PaymentService extends BaseService {
   /// Requires private API authentication headers.
   Future<BaseResponse<PaymentListResponse>> getPayments({
     required PaymentListRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/private/vpos/transaction/list",
       queryParameters: request.toJson(),
       fromJsonT: (json) => PaymentListResponse.fromJson(json),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
     );
 
     return response;
@@ -521,14 +477,11 @@ class PaymentService extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<CampaignInquiryResponse>> inquireCampaigns({
     required CampaignInquiryRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/campaign/vpos/inquiry",
       data: request.toJson(),
       fromJsonT: (json) => CampaignInquiryResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
     );
 
     return response;

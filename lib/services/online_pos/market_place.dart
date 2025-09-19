@@ -44,14 +44,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ProductApproveResponse>> approveProductPayment({
     required ProductApproveRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/approve/pw/product",
       data: request.toJson(),
       fromJsonT: (json) => ProductApproveResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -61,14 +61,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<PaymentApproveResponse>> approvePayment({
     required PaymentApproveRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/approve/pw/payment",
       data: request.toJson(),
       fromJsonT: (json) => PaymentApproveResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -78,14 +78,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<SelfProductApproveResponse>> approveSelfProduct({
     required SelfProductApproveRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/approve/self/product",
       data: request.toJson(),
       fromJsonT: (json) => SelfProductApproveResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -94,14 +94,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<SelfPaymentApproveResponse>> approveSelfPayment({
     required SelfPaymentApproveRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/approve/self/payment",
       data: request.toJson(),
       fromJsonT: (json) => SelfPaymentApproveResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -110,14 +110,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ProductRejectResponse>> rejectProducts({
     required ProductRejectRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/reject/product",
       data: request.toJson(),
       fromJsonT: (json) => ProductRejectResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -127,14 +127,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<PaymentRejectResponse>> rejectPayment({
     required PaymentRejectRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/reject/payment",
       data: request.toJson(),
       fromJsonT: (json) => PaymentRejectResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -143,13 +143,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ApprovalReportResponse>> getApprovalReport({
     required int paymentId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/approval",
       fromJsonT: (json) => ApprovalReportResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'paymentid': paymentId.toString()},
+      requiresAuth: true,
+      headers: {'paymentid': paymentId.toString()},
     );
 
     return response;
@@ -159,13 +160,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ProductEarningResponse>> getProductEarning({
     required int productId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/earning/product",
       fromJsonT: (json) => ProductEarningResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'productid': productId.toString()},
+      requiresAuth: true,
+      headers: {'productid': productId.toString()},
     );
 
     return response;
@@ -175,14 +177,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<void>> postponeProductEarning({
     required ProductEarningPostponeRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/postpone/product",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body: null dönüyor
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -191,14 +193,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<void>> increaseProductEarning({
     required ProductEarningIncreaseRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/increase/product",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -207,14 +209,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<void>> decreaseProductEarning({
     required ProductEarningDecreaseRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/decrease/product",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -222,14 +224,14 @@ class MarketPlace extends BaseService {
   /// Updates the reflection date of a specific product earning.
   Future<BaseResponse<void>> updateProductEarningReflection({
     required ProductEarningReflectionRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/reflection/product",
       data: request.toJson(),
       fromJsonT: (json) => null,
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
     return response;
   }
@@ -237,14 +239,14 @@ class MarketPlace extends BaseService {
   /// Optionally allows updating the reflection date.
   Future<BaseResponse<void>> retryProductEarning({
     required ProductEarningRetryRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/put/retry/product",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
     return response;
   }
@@ -252,13 +254,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<List<PaymentEarningResponse>>> getPaymentEarnings({
     required int paymentId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/earning/payment",
       fromJsonT: (json) => (json as List).map((item) => PaymentEarningResponse.fromJson(item)).toList(),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'paymentid': paymentId.toString()},
+      requiresAuth: true,
+      headers: {'paymentid': paymentId.toString()},
     );
 
     return response;
@@ -267,25 +270,26 @@ class MarketPlace extends BaseService {
   /// Optionally allows updating the reflection date.
   Future<BaseResponse<Null>> retryPaymentEarning({
     required PaymentEarningRetryRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/put/retry/payment",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
   }
   /// Retrieves earning details by earning Id.
   /// Requires public API authentication headers.
-  Future<BaseResponse<EarningByIdResponse>> getEarningById({required int earningId, required String apiKeyPublic, required String apiClientPublic}) async {
+  Future<BaseResponse<EarningByIdResponse>> getEarningById({required int earningId}) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/earning/id",
       fromJsonT: (json) => EarningByIdResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'earningid': earningId.toString()},
+      requiresAuth: true,
+      headers: {'earningid': earningId.toString()},
     );
 
     return response;
@@ -295,14 +299,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<void>> postponeEarningById({
     required EarningPostponeByIdRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/postpone/id",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -312,14 +316,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<void>> increaseEarningById({
     required EarningIncreaseByIdRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/increase/id",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -327,14 +331,14 @@ class MarketPlace extends BaseService {
   /// Decreases an earning by its Id.
   Future<BaseResponse<void>> decreaseEarningById({
     required EarningDecreaseByIdRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/decrease/id",
       data: request.toJson(),
       fromJsonT: (json) => null,
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -344,14 +348,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<void>> updateEarningReflectionById({
     required EarningReflectionByIdRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/reflection/id",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -360,12 +364,12 @@ class MarketPlace extends BaseService {
   /// Retries an earning transaction by its Id.
   /// Optionally allows updating the reflection date.
   /// Requires public API authentication headers.
-  Future<BaseResponse<void>> retryEarningById({required EarningRetryByIdRequest request, required String apiKeyPublic, required String apiClientPublic}) async {
+  Future<BaseResponse<void>> retryEarningById({required EarningRetryByIdRequest request}) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/earning/put/retry/id",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -375,13 +379,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<EarningByMemberBody>> getEarningsByMember({
     required EarningByMemberRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/earning/member",
       fromJsonT: (json) => EarningByMemberBody.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, ...request.toHeaders()},
+      requiresAuth: true,
+      headers: { ...request.toHeaders()},
     );
 
     return response;
@@ -391,17 +396,16 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<List<ProductDebtResponse>>> getProductDebts({
     required int productId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/debt/product",
       fromJsonT: (json) => (json as List)
           .map((item) => ProductDebtResponse.fromJson(item))
           .toList(),
+      requiresAuth: true,
       headers: {
-        'apikeypublic': apiKeyPublic,
-        'apiclientpublic': apiClientPublic,
         'productid': productId.toString(),
       },
     );
@@ -412,49 +416,50 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<List<ProductDebtResponse>>> getPaymentDebts({
     required int paymentId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/report/debt/payment",
       fromJsonT: (json) => (json as List).map((item) => ProductDebtResponse.fromJson(item)).toList(),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'paymentid': paymentId.toString()},
+      requiresAuth: true,
+      headers: {'paymentid': paymentId.toString()},
     );
 
     return response;
   }
   /// Increases a debt amount by its Id.
   /// Requires public API authentication headers.
-  Future<BaseResponse<void>> increaseDebt({required DebtUpdateRequest request, required String apiKeyPublic, required String apiClientPublic}) async {
+  Future<BaseResponse<void>> increaseDebt({required DebtUpdateRequest request}) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/debt/increase/id",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
   }  
   /// Decreases a debt amount by its Id.
   /// Requires public API authentication headers.
-  Future<BaseResponse<void>> decreaseDebt({required DebtUpdateRequest request, required String apiKeyPublic, required String apiClientPublic}) async {
+  Future<BaseResponse<void>> decreaseDebt({required DebtUpdateRequest request}) async {
     final response = await put(
       "${ApiConstants.baseUrl}/paywall/marketplace/debt/decrease/id",
       data: request.toJson(),
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
   }
   /// Deletes a debt by its Id.
   /// Requires public API authentication headers.
-  Future<BaseResponse<void>> deleteDebt({required int id, required String apiKeyPublic, required String apiClientPublic}) async {
+  Future<BaseResponse<void>> deleteDebt({required int id}) async {
     final response = await delete(
       "${ApiConstants.baseUrl}/paywall/marketplace/debt/delete/id",
       data: {"Id": id},
       fromJsonT: (json) => null, // Body is always null
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -465,15 +470,14 @@ class MarketPlace extends BaseService {
     required DateTime dateFrom,
     required DateTime dateTo,
     required int currencyId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/manual/trigger/pending",
       fromJsonT: (json) => ManualTriggerPendingResponse.fromJson(json),
+      requiresAuth: true,
       headers: {
-        'apikeypublic': apiKeyPublic,
-        'apiclientpublic': apiClientPublic,
         'datefrom': dateFrom.toIso8601String().split('T').first,
         'dateto': dateTo.toIso8601String().split('T').first,
         'currencyid': currencyId.toString(),
@@ -486,14 +490,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ManualTriggerStartResponse>> startManualTrigger({
     required ManualTriggerStartRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/manual/trigger/start",
       data: request.toJson(),
       fromJsonT: (json) => ManualTriggerStartResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;
@@ -502,13 +506,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ManualTriggerInquiryResponse>> inquireManualTrigger({
     required String jobId,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await get(
       "${ApiConstants.baseUrl}/paywall/marketplace/manual/trigger/inquiry",
       fromJsonT: (json) => ManualTriggerInquiryResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic, 'jobid': jobId},
+      requiresAuth: true,
+      headers: {'jobid': jobId},
     );
 
     return response;
@@ -517,14 +522,14 @@ class MarketPlace extends BaseService {
   /// Requires public API authentication headers.
   Future<BaseResponse<ManualTriggerRestartResponse>> restartManualTrigger({
     required ManualTriggerRestartRequest request,
-    required String apiKeyPublic,
-    required String apiClientPublic,
+    
+    
   }) async {
     final response = await post(
       "${ApiConstants.baseUrl}/paywall/marketplace/manual/trigger/restart",
       data: request.toJson(),
       fromJsonT: (json) => ManualTriggerRestartResponse.fromJson(json),
-      headers: {'apikeypublic': apiKeyPublic, 'apiclientpublic': apiClientPublic},
+      requiresAuth: true,
     );
 
     return response;

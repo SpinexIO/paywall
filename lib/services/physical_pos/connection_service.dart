@@ -14,11 +14,11 @@ class ConnectionService {
   /// Fetches the connection list with pagination.
   ///
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<ConnectionResponse> getConnections({required ConnectionRequest request, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<ConnectionResponse> getConnections({required ConnectionRequest request}) async {
     final response = await _apiClient.post(
       "/api/connection/list",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return ConnectionResponse.fromJson(response.data as Map<String, dynamic>);
@@ -28,10 +28,10 @@ class ConnectionService {
   ///
   /// [connectionId] - The connection identifier.
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
-  Future<ConnectionDetailResponse> getConnectionDetail({required String connectionId, required String apiKeyPrivate, required String apiClientPrivate}) async {
+  Future<ConnectionDetailResponse> getConnectionDetail({required String connectionId}) async {
     final response = await _apiClient.get(
       "/api/connection/$connectionId/detail",
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return ConnectionDetailResponse.fromJson(response.data as Map<String, dynamic>);
@@ -42,13 +42,11 @@ class ConnectionService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<ConnectionCreateResponse> createConnection({
     required ConnectionCreateRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.post(
       "/api/connection",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return ConnectionCreateResponse.fromJson(response.data as Map<String, dynamic>);
@@ -59,13 +57,11 @@ class ConnectionService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<ConnectionUpdateResponse> updateConnection({
     required ConnectionUpdateRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.put(
       "/api/connection",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return ConnectionUpdateResponse.fromJson(response.data as Map<String, dynamic>);
@@ -76,13 +72,11 @@ class ConnectionService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<ConnectionDeleteResponse> deleteConnection({
     required ConnectionDeleteRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.delete(
       "/api/connection",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return ConnectionDeleteResponse.fromJson(response.data as Map<String, dynamic>);
@@ -93,16 +87,11 @@ class ConnectionService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<ConnectionDisconnectResponse> disconnectConnection({
     required ConnectionDisconnectRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.put(
       "/api/connection/disconnect",
       data: request.toJson(),
-      headers: {
-        'apikeyprivate': apiKeyPrivate,
-        'apiclientprivate': apiClientPrivate,
-      },
+      requiresAuth: true,
     );
 
     return ConnectionDisconnectResponse.fromJson(
@@ -115,13 +104,11 @@ class ConnectionService {
   /// Requires `apikeyprivate` and `apiclientprivate` headers.
   Future<ConnectionReconnectResponse> reconnectConnection({
     required ConnectionReconnectRequest request,
-    required String apiKeyPrivate,
-    required String apiClientPrivate,
   }) async {
     final response = await _apiClient.put(
       "/api/connection/reconnect",
       data: request.toJson(),
-      headers: {'apikeyprivate': apiKeyPrivate, 'apiclientprivate': apiClientPrivate},
+      requiresAuth: true,
     );
 
     return ConnectionReconnectResponse.fromJson(response.data as Map<String, dynamic>);

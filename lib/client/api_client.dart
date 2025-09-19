@@ -64,7 +64,13 @@ class ApiClient {
     _dio.options.headers.remove('apiclientprivate');
   }
   /// Executes a GET request with optional query parameters and headers.
-  Future<Response<T>> get<T>(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers}) async {
+  Future<Response<T>> get<T>(String path, {Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers, bool requiresAuth = false}) async {
+    if (requiresAuth && !_dio.options.headers.containsKey('apikeyprivate')) {
+      throw UnauthorizedException(message: "Missing apikeyprivate header");
+    }
+    if (requiresAuth && !_dio.options.headers.containsKey('apiclientprivate')) {
+      throw UnauthorizedException(message: "Missing apiclientprivate header");
+    }
     try {
       return await _dio.get<T>(
         path,
@@ -77,7 +83,13 @@ class ApiClient {
   }
 
   /// Executes a POST request with optional body and headers.
-  Future<Response<T>> post<T>(String path, {dynamic data, Map<String, dynamic>? headers,}) async {
+  Future<Response<T>> post<T>(String path, {dynamic data, Map<String, dynamic>? headers, bool requiresAuth = false}) async {
+    if (requiresAuth && !_dio.options.headers.containsKey('apikeyprivate')) {
+      throw UnauthorizedException(message: "Missing apikeyprivate header");
+    }
+    if (requiresAuth && !_dio.options.headers.containsKey('apiclientprivate')) {
+      throw UnauthorizedException(message: "Missing apiclientprivate header");
+    }
     try {
       return await _dio.post<T>(
         path,
@@ -90,7 +102,13 @@ class ApiClient {
   }
 
   /// Executes a PUT request with optional body and headers.
-  Future<Response<T>> put<T>(String path, {dynamic data, Map<String, dynamic>? headers}) async {
+  Future<Response<T>> put<T>(String path, {dynamic data, Map<String, dynamic>? headers, bool requiresAuth = false}) async {
+    if (requiresAuth && !_dio.options.headers.containsKey('apikeyprivate')) {
+      throw UnauthorizedException(message: "Missing apikeyprivate header");
+    }
+    if (requiresAuth && !_dio.options.headers.containsKey('apiclientprivate')) {
+      throw UnauthorizedException(message: "Missing apiclientprivate header");
+    }
     try {
       return await _dio.put<T>(
         path,
@@ -103,7 +121,13 @@ class ApiClient {
   }
 
   /// Executes a DELETE request with optional body and headers.
-  Future<Response<T>> delete<T>(String path, {dynamic data, Map<String, dynamic>? headers}) async {
+  Future<Response<T>> delete<T>(String path, {dynamic data, Map<String, dynamic>? headers, bool requiresAuth = false}) async {
+    if (requiresAuth && !_dio.options.headers.containsKey('apikeyprivate')) {
+      throw UnauthorizedException(message: "Missing apikeyprivate header");
+    }
+    if (requiresAuth && !_dio.options.headers.containsKey('apiclientprivate')) {
+      throw UnauthorizedException(message: "Missing apiclientprivate header");
+    }
     try {
       return await _dio.delete<T>(
         path,
