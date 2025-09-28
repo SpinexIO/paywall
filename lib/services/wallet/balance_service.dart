@@ -1,7 +1,13 @@
+import 'package:paywall/models/wallet/balance/block_balance_request.dart';
+import 'package:paywall/models/wallet/balance/block_balance_response_data.dart';
 import 'package:paywall/models/wallet/balance/create_gift_balance_by_alias_request.dart';
 import 'package:paywall/models/wallet/balance/create_gift_balance_by_alias_response.dart';
+import 'package:paywall/models/wallet/balance/delete_block_balance_request.dart';
+import 'package:paywall/models/wallet/balance/delete_block_balance_response_data.dart';
 import 'package:paywall/models/wallet/balance/get_gift_balance_by_id_response.dart';
 import 'package:paywall/models/wallet/balance/get_gift_balance_by_wallet_response.dart';
+import 'package:paywall/models/wallet/balance/list_block_balance_request.dart';
+import 'package:paywall/models/wallet/balance/list_block_balance_response_data.dart';
 import 'package:paywall/utils/api_constants.dart';
 
 import '../../models/base_response.dart';
@@ -67,6 +73,36 @@ class BalanceService extends BaseService {
       data: {"WalletId": walletId},
       requiresAuth: true,
       fromJsonT: (dynamic json) => (json as bool?) ?? false,
+    );
+  }
+  /// Blocks balance for a wallet.
+  /// Hint: Calls POST /v1/wallet/balance/blocked
+  Future<BaseResponse<BlockBalanceResponseData>> blockBalance({required BlockBalanceRequest request}) {
+    return post<BlockBalanceResponseData>(
+      '${ApiConstants.baseUrl}/v1/wallet/balance/blocked',
+      data: request.toJson(),
+      requiresAuth: true,
+      fromJsonT: (dynamic json) => BlockBalanceResponseData.fromJson(json as Map<String, dynamic>),
+    );
+  }
+  /// Gets blocked balances for a wallet.
+  /// Hint: Calls GET /v1/wallet/balance/blocked
+  Future<BaseResponse<ListBlockBalanceResponseData>> listBlockedBalances({required ListBlockBalanceRequest request}) {
+    return get<ListBlockBalanceResponseData>(
+      '${ApiConstants.baseUrl}/v1/wallet/balance/blocked',
+      queryParameters: request.toQueryParams(),
+      requiresAuth: true,
+      fromJsonT: (dynamic json) => ListBlockBalanceResponseData.fromJson(json as Map<String, dynamic>),
+    );
+  }
+  /// Deletes a blocked balance record.
+  /// Hint: Calls DELETE /v1/wallet/balance/blocked
+  Future<BaseResponse<DeleteBlockBalanceResponseData>> deleteBlockedBalance({required DeleteBlockBalanceRequest request}) {
+    return delete<DeleteBlockBalanceResponseData>(
+      '${ApiConstants.baseUrl}/v1/wallet/balance/blocked',
+      data: request.toJson(),
+      requiresAuth: true,
+      fromJsonT: (dynamic json) => DeleteBlockBalanceResponseData.fromJson(json as Map<String, dynamic>),
     );
   }
 }
